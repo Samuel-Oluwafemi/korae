@@ -53,6 +53,12 @@ export default function ProductPage() {
     .slice(0, 4);
   return (
     <div className="mx-auto max-w-7xl px-5 py-10">
+      <Link
+        to="/shop"
+        className="mb-8 inline-block text-xs tracking-[0.18em] hover:text-olive"
+      >
+        &lt; SHOP
+      </Link>
       <div className="grid gap-10 md:grid-cols-[1.3fr_1fr] md:gap-16">
         <div className="flex flex-col-reverse gap-3 md:flex-row">
           <div className="flex gap-3 md:flex-col">
@@ -70,7 +76,7 @@ export default function ProductPage() {
           <Img
             src={p.images[img]}
             alt={p.name}
-            className="aspect-[7/5] w-[600px] rounded bg-line"
+            className="aspect-[7/5] w-[600px] md:h-[600px] rounded bg-line"
           />
         </div>
         <div className="md:sticky md:top-24 md:self-start">
