@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+@theme{--color-ivory:#F7F5F0;--color-ink:#171717;--color-muted:#6F6B64;--color-olive:#4F5947;--color-clay:#A66A52;--color-line:#DDD9D1;--font-serif:'Cormorant Garamond',serif;--font-sans:'Inter',sans-serif}
+body{@apply bg-ivory text-ink font-sans antialiased}
+.btn,.btn-ghost,.btn-light{@apply inline-flex items-center justify-center px-8 py-4 text-xs font-medium uppercase tracking-[0.18em] transition duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive disabled:cursor-not-allowed disabled:opacity-40}
+.btn{@apply bg-ink text-ivory hover:bg-olive}
+.btn-ghost{@apply border border-ink text-ink hover:bg-ink hover:text-ivory}
+.btn-light{@apply bg-ivory text-ink hover:bg-white}
+.input{@apply w-full border border-line bg-transparent px-4 py-3.5 text-base outline-none transition focus:border-ink}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
