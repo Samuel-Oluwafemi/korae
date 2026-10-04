@@ -8,6 +8,7 @@ import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Collections from "./pages/Collections";
 function ScrollTop() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/collections" element={<Collections />} />
           <Route path="/product/:slug" element={<ProductPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

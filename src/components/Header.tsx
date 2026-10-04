@@ -5,7 +5,7 @@ import { useCart } from "../context/CartContext";
 import SearchOverlay from "./SearchOverlay";
 const links = [
   ["Shop", "/shop"],
-  ["Collections", "/shop?c=new"],
+  ["Collections", "/collections"],
   ["About", "/#about"],
 ];
 export default function Header() {
