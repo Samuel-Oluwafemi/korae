@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CartDrawer from "./components/CartDrawer";
+import HomeIntro from "./components/HomeIntro";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
@@ -27,6 +28,7 @@ export default function App() {
   return (
     <>
       <ScrollTop />
+      <HomeIntro />
       <Header />
       <main key={pathname} className="min-h-[70vh] animate-[fade_.4s_ease]">
         <Routes>
