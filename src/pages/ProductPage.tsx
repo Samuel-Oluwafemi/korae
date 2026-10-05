@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { products } from "../data/products";
 import { useCart } from "../context/CartContext";
 import { money } from "../utils/format";
@@ -26,9 +26,18 @@ export default function ProductPage() {
   const p = products.find((x) => x.slug === slug);
   const { add } = useCart();
   const [img, setImg] = useState(0);
+  const [galleryPaused, setGalleryPaused] = useState(false);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [qty, setQty] = useState(1);
+  useEffect(() => {
+    if (!p || p.images.length < 2 || galleryPaused) return;
+    const interval = window.setInterval(
+      () => setImg((current) => (current + 1) % p.images.length),
+      5000,
+    );
+    return () => window.clearInterval(interval);
+  }, [galleryPaused, img, p]);
   if (!p)
     return (
       <div className="py-32 text-center">
@@ -60,7 +69,20 @@ export default function ProductPage() {
         &lt; SHOP
       </Link>
       <div className="grid gap-10 md:grid-cols-[1.3fr_1fr] md:gap-16">
-        <div className="flex flex-col-reverse gap-3 md:flex-row">
+        <div
+          className="flex flex-col-reverse gap-3 md:flex-row"
+          onMouseEnter={() => setGalleryPaused(true)}
+          onMouseLeave={() => setGalleryPaused(false)}
+          onFocusCapture={() => setGalleryPaused(true)}
+          onBlurCapture={(event) => {
+            if (
+              !(event.relatedTarget instanceof Node) ||
+              !event.currentTarget.contains(event.relatedTarget)
+            ) {
+              setGalleryPaused(false);
+            }
+          }}
+        >
           <div className="flex gap-3 md:flex-col">
             {p.images.map((s, i) => (
               <button
@@ -73,11 +95,41 @@ export default function ProductPage() {
               </button>
             ))}
           </div>
-          <Img
-            src={p.images[img]}
-            alt={p.name}
-            className="aspect-[7/5] w-[600px] md:h-[600px] rounded bg-line"
-          />
+          <div className="relative">
+            <Img
+              key={p.images[img]}
+              src={p.images[img]}
+              alt={p.name}
+              className="aspect-[7/5] w-[600px] animate-[fade_.5s_ease] rounded bg-line md:h-[600px]"
+            />
+            {p.images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  aria-label="Previous image"
+                  onClick={() =>
+                    setImg(
+                      (current) =>
+                        (current - 1 + p.images.length) % p.images.length,
+                    )
+                  }
+                  className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-ivory/90 transition hover:bg-ivory"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next image"
+                  onClick={() =>
+                    setImg((current) => (current + 1) % p.images.length)
+                  }
+                  className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-ivory/90 transition hover:bg-ivory"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </>
+            )}
+          </div>
         </div>
         <div className="md:sticky md:top-24 md:self-start">
           <p className="text-xs tracking-[0.18em] text-muted">
