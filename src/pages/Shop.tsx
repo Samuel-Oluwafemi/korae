@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { SlidersHorizontal, X } from "lucide-react";
 import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
+import ScrollReveal from "../components/ScrollReveal";
 const tabs = [
   ["all", "All"],
   ["Bags", "Bags"],
@@ -119,54 +120,58 @@ export default function Shop() {
       <p className="mt-3 text-muted">
         Considered bags and footwear designed to move with you.
       </p>
-      <div className="mt-10 flex items-center justify-between gap-4 border-b border-line">
-        <nav
-          aria-label="Categories"
-          className="-mb-px flex gap-6 overflow-x-auto text-xs tracking-[0.18em]"
-        >
-          {tabs.map(([k, t]) => (
-            <button
-              key={k}
-              onClick={() => setSp(k === "all" ? {} : { c: k })}
-              aria-current={c === k}
-              className={`whitespace-nowrap border-b py-4 uppercase ${c === k ? "border-ink" : "border-transparent text-muted hover:text-ink"}`}
+      <ScrollReveal>
+        <>
+          <div className="mt-10 flex items-center justify-between gap-4 border-b border-line">
+            <nav
+              aria-label="Categories"
+              className="-mb-px flex gap-6 overflow-x-auto text-xs tracking-[0.18em]"
             >
-              {t}
-            </button>
-          ))}
-        </nav>
-        <button
-          onClick={() => setOpen(true)}
-          className="flex shrink-0 items-center gap-2 text-sm md:hidden"
-        >
-          <SlidersHorizontal size={16} />
-          Filter &amp; Sort
-        </button>
-      </div>
-      <div className="mt-10 grid gap-12 md:grid-cols-[13rem_1fr]">
-        <aside className="hidden md:block">{Filters}</aside>
-        <div>
-          <p className="mb-6 text-sm text-muted">
-            {list.length} {list.length === 1 ? "piece" : "pieces"}
-          </p>
-          {list.length ? (
-            <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
-              {list.map((p) => (
-                <ProductCard key={p.id} p={p} />
+              {tabs.map(([k, t]) => (
+                <button
+                  key={k}
+                  onClick={() => setSp(k === "all" ? {} : { c: k })}
+                  aria-current={c === k}
+                  className={`whitespace-nowrap border-b py-4 uppercase ${c === k ? "border-ink" : "border-transparent text-muted hover:text-ink"}`}
+                >
+                  {t}
+                </button>
               ))}
-            </div>
-          ) : (
-            <div className="py-20 text-center">
-              <p className="font-serif text-3xl">
-                No pieces match those filters.
+            </nav>
+            <button
+              onClick={() => setOpen(true)}
+              className="flex shrink-0 items-center gap-2 text-sm md:hidden"
+            >
+              <SlidersHorizontal size={16} />
+              Filter &amp; Sort
+            </button>
+          </div>
+          <div className="mt-10 grid gap-12 md:grid-cols-[13rem_1fr]">
+            <aside className="hidden md:block">{Filters}</aside>
+            <div>
+              <p className="mb-6 text-sm text-muted">
+                {list.length} {list.length === 1 ? "piece" : "pieces"}
               </p>
-              <button onClick={clear} className="btn mt-6">
-                Clear all
-              </button>
+              {list.length ? (
+                <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
+                  {list.map((p) => (
+                    <ProductCard key={p.id} p={p} />
+                  ))}
+                </div>
+              ) : (
+                <div className="py-20 text-center">
+                  <p className="font-serif text-3xl">
+                    No pieces match those filters.
+                  </p>
+                  <button onClick={clear} className="btn mt-6">
+                    Clear all
+                  </button>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+        </>
+      </ScrollReveal>
       <div
         onClick={() => setOpen(false)}
         className={`fixed inset-0 z-50 bg-ink/40 transition duration-300 md:hidden ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}

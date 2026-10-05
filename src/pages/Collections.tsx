@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Img from "../components/Img";
 import { products } from "../data/products";
 import { IMG } from "../data/images";
+import ScrollReveal from "../components/ScrollReveal";
 
 const collections = [
   ["Bags", "Carry what matters.", "/shop?c=Bags", IMG.catBags],
@@ -22,26 +23,28 @@ export default function Collections() {
       <p className="mt-3 text-muted">
         Explore considered pieces for every part of your day.
       </p>
-      <section className="mt-10 grid gap-4 pb-10 sm:grid-cols-2 lg:grid-cols-4">
-        {collections.map(([title, description, to, image]) => (
-          <Link
-            key={title}
-            to={to}
-            className="group relative block aspect-[4/5] overflow-hidden bg-line"
-          >
-            <Img
-              src={image}
-              alt={title}
-              className="h-full w-full transition duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black/25" />
-            <div className="absolute bottom-6 left-6 text-ivory">
-              <h2 className="font-serif text-4xl">{title}</h2>
-              <p className="text-sm">{description}</p>
-            </div>
-          </Link>
-        ))}
-      </section>
+      <ScrollReveal>
+        <section className="mt-10 grid gap-4 pb-10 sm:grid-cols-2 lg:grid-cols-4">
+          {collections.map(([title, description, to, image]) => (
+            <Link
+              key={title}
+              to={to}
+              className="group relative block aspect-[4/5] overflow-hidden bg-line"
+            >
+              <Img
+                src={image}
+                alt={title}
+                className="h-full w-full transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/25" />
+              <div className="absolute bottom-6 left-6 text-ivory">
+                <h2 className="font-serif text-4xl">{title}</h2>
+                <p className="text-sm">{description}</p>
+              </div>
+            </Link>
+          ))}
+        </section>
+      </ScrollReveal>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { money } from "../utils/format";
 import Img from "../components/Img";
 import Qty from "../components/Qty";
 import ProductCard from "../components/ProductCard";
+import ScrollReveal from "../components/ScrollReveal";
 const info = [
   [
     "Details",
@@ -195,14 +196,16 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
-      <section className="mt-24">
-        <h2 className="mb-8 font-serif text-4xl">You may also like</h2>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-x-6">
-          {rel.map((r) => (
-            <ProductCard key={r.id} p={r} />
-          ))}
-        </div>
-      </section>
+      <ScrollReveal>
+        <section className="mt-24">
+          <h2 className="mb-8 font-serif text-4xl">You may also like</h2>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-x-6">
+            {rel.map((r) => (
+              <ProductCard key={r.id} p={r} />
+            ))}
+          </div>
+        </section>
+      </ScrollReveal>
     </div>
   );
 }
