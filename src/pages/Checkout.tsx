@@ -82,7 +82,7 @@ export default function Checkout() {
             >
               <Img src={l.product.images[0]} alt="" className="h-16 w-14" />
               <span className="flex-1">
-                {l.product.name}
+                <span className="font-serif text-base">{l.product.name}</span>
                 <br />
                 <span className="text-muted">
                   {l.color} · Qty {l.qty}

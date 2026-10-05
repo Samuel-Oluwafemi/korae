@@ -21,7 +21,7 @@ export default function CartLine({ l }: { l: Line }) {
       <div className="flex flex-1 flex-col justify-between text-sm">
         <div className="flex justify-between gap-3">
           <div>
-            <p className="font-medium">{l.product.name}</p>
+            <p className="font-serif text-base">{l.product.name}</p>
             <p className="text-muted">
               {l.color}
               {l.size && l.size !== "One Size" ? `, size ${l.size}` : ""}

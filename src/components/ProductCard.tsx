@@ -30,7 +30,7 @@ export default function ProductCard({ p }: { p: Product }) {
       </div>
       <div className="mt-4 flex justify-between gap-3 text-sm">
         <div>
-          <h3 className="font-medium">{p.name}</h3>
+          <h3 className="font-serif text-base">{p.name}</h3>
           <p className="mt-0.5 text-muted">{p.category}</p>
         </div>
         <p className="whitespace-nowrap">{money(p.price)}</p>
