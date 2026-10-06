@@ -5,11 +5,27 @@ import Img from "../components/Img";
 import ProductCard from "../components/ProductCard";
 import Newsletter from "../components/Newsletter";
 import ScrollReveal from "../components/ScrollReveal";
+import HeroSlideshow from "../components/HeroSlideshow";
 const wrap = "mx-auto max-w-7xl px-5";
 const cats = [
-  ["Bags", "Carry what matters.", "/shop?c=Bags", IMG.catBags],
-  ["Shoes", "Step into your everyday.", "/shop?c=Shoes", IMG.catShoes],
-  ["New Arrivals", "What's new at KORAE.", "/shop?c=new", IMG.catNew],
+  [
+    "Bags",
+    "A considered companion, carried everywhere.",
+    "/shop?c=Bags",
+    IMG.catBags,
+  ],
+  [
+    "Shoes",
+    "An assured step, from day to evening.",
+    "/shop?c=Shoes",
+    IMG.catShoes,
+  ],
+  [
+    "New Arrivals",
+    "The latest expressions of KORAE.",
+    "/shop?c=new",
+    IMG.catNew,
+  ],
 ];
 function Row({
   title,
@@ -44,35 +60,32 @@ export default function Home() {
   return (
     <>
       <ScrollReveal>
-        <section className="relative h-[88vh] min-h-[560px] bg-ink">
-        <Img
-          src={IMG.hero}
-          alt="KORAE bags and footwear in a Lagos setting"
-          className="absolute inset-0 h-full w-full"
-        />
-        <div className="absolute inset-0 bg-black/35" />
-        <div
-          className={`${wrap} relative flex h-full flex-col justify-end pb-14 text-ivory md:pb-24`}
-        >
-          <h1 className="max-w-3xl font-serif text-6xl leading-[1.02] md:text-8xl">
-            Made for the way you move.
-          </h1>
-          <p className="mt-6 max-w-lg text-lg text-ivory/90">
-            Contemporary bags and footwear designed for everyday movement, from
-            Lagos streets to wherever you're headed next.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link to="/shop" className="btn-light">
-              Shop the collection
-            </Link>
-            <Link
-              to="/shop?c=new"
-              className="btn-ghost border-ivory text-ivory hover:bg-ivory hover:text-ink"
-            >
-              Explore new arrivals
-            </Link>
+        <section className="relative h-[88svh] min-h-[560px] bg-ink md:min-h-[620px]">
+          <HeroSlideshow />
+          <div
+            className={`${wrap} relative flex h-full flex-col justify-end pb-14 text-ivory md:max-w-7xl md:justify-center md:pb-0`}
+          >
+            <div className="max-w-xl md:w-[48%] lg:w-[44%]">
+              <h1 className="max-w-3xl font-serif text-6xl leading-[1.02] md:text-6xl lg:text-7xl">
+                Quietly distinctive. Made for everywhere.
+              </h1>
+              <p className="mt-6 max-w-lg text-lg text-ivory/90">
+                Refined bags and footwear, shaped by Lagos and designed to move
+                with you—wherever the day leads.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row md:flex-col lg:flex-row">
+                <Link to="/shop" className="btn-light">
+                  Explore the collection
+                </Link>
+                <Link
+                  to="/shop?c=new"
+                  className="btn-ghost !border-ivory !text-ivory hover:!bg-ivory hover:!text-ink"
+                >
+                  Discover what’s new
+                </Link>
+              </div>
+            </div>
           </div>
-        </div>
         </section>
       </ScrollReveal>
       <ScrollReveal>
@@ -82,20 +95,20 @@ export default function Home() {
         >
           <Img
             src={IMG.about}
-            alt="KORAE editorial"
+            alt="KORAE editorial featuring a structured handbag"
             className="aspect-[4/5] w-full bg-line"
           />
           <div className="max-w-md">
             <h2 className="font-serif text-4xl leading-tight md:text-6xl">
-              Designed in Lagos. Made for everywhere.
+              Rooted in Lagos. Refined for everywhere.
             </h2>
             <p className="mt-6 leading-relaxed text-muted">
-              KORAE creates refined everyday accessories inspired by movement,
-              modern Nigerian life and understated personal style. Each piece is
-              cut to be carried often and noticed quietly.
+              Inspired by the energy of Lagos and a love of considered design,
+              KORAE creates bags and footwear with a quiet confidence—made to
+              accompany you, wherever life leads.
             </p>
             <Link to="/shop" className="btn-ghost mt-8">
-              Discover KORAE
+              Explore KORAE
             </Link>
           </div>
         </section>
@@ -126,13 +139,13 @@ export default function Home() {
         title="New arrivals"
         items={products.filter((p) => p.isNew).slice(0, 4)}
         to="/shop?c=new"
-        cta="View all new arrivals"
+        cta="Discover new arrivals"
       />
       <Row
         title="Bestsellers"
         items={products.filter((p) => p.isBestseller).slice(0, 4)}
         to="/shop?c=best"
-        cta="Shop bestsellers"
+        cta="Explore bestsellers"
       />
       <ScrollReveal>
         <section className="relative mt-10 h-[70vh] min-h-[420px] bg-ink">
@@ -146,12 +159,11 @@ export default function Home() {
             className={`${wrap} relative flex h-full flex-col justify-center text-ivory`}
           >
             <h2 className="max-w-xl font-serif text-5xl md:text-7xl">
-              Less noise. Better pieces.
+              Considered, by design.
             </h2>
             <p className="mt-5 max-w-md text-ivory/90">
-              KORAE creates considered accessories for people who value good
-              design, quality and pieces that move naturally through their
-              everyday.
+              A thoughtful edit of bags and footwear, created to bring a sense
+              of ease and intention to the everyday.
             </p>
           </div>
         </section>
