@@ -14,17 +14,17 @@ export default function Newsletter() {
         <div className="mx-auto max-w-xl">
           {done ? (
             <>
-              <h2 className="font-serif text-5xl">You're on the list.</h2>
+              <h2 className="font-serif text-5xl">A note from KORAE.</h2>
               <p className="mt-4 text-muted">
-                We'll be in touch when something new arrives.
+                Thank you. We’ll be in touch when something worth sharing arrives.
               </p>
             </>
           ) : (
             <>
-              <h2 className="font-serif text-5xl">Stay in the know.</h2>
+              <h2 className="font-serif text-5xl">A little more KORAE.</h2>
               <p className="mt-4 text-muted">
-                New collections, limited releases and stories from KORAE —
-                delivered occasionally.
+                Notes on new collections, considered pieces, and the inspiration
+                behind them—delivered occasionally.
               </p>
               <form
                 onSubmit={submit}
@@ -42,7 +42,7 @@ export default function Newsletter() {
                   placeholder="Email address"
                   className="input"
                 />
-                <button className="btn">Subscribe</button>
+                <button className="btn">Join the list</button>
               </form>
             </>
           )}
