@@ -1,9 +1,12 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { SlidersHorizontal, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, SlidersHorizontal, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import ScrollReveal from "../components/ScrollReveal";
+const PRODUCTS_PER_PAGE = 4;
+
 const tabs = [
   ["all", "All"],
   ["Bags", "Bags"],
@@ -32,6 +35,10 @@ export default function Shop() {
   const [avail, setAvail] = useState(false);
   const [sort, setSort] = useState("featured");
   const [open, setOpen] = useState(false);
+  const [carouselEnabled, setCarouselEnabled] = useState(false);
+  const [carouselPage, setCarouselPage] = useState(0);
+  const [carouselPaused, setCarouselPaused] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
   const list = useMemo(() => {
     const [, lo, hi] = prices[price];
     const l = products.filter(
@@ -53,6 +60,43 @@ export default function Shop() {
     };
     return [...l].sort(by[sort]);
   }, [c, price, avail, sort]);
+  const pageCount = carouselEnabled
+    ? Math.ceil(list.length / PRODUCTS_PER_PAGE)
+    : 1;
+  const visibleProducts = carouselEnabled
+    ? list.slice(
+        carouselPage * PRODUCTS_PER_PAGE,
+        (carouselPage + 1) * PRODUCTS_PER_PAGE,
+      )
+    : list;
+
+  useEffect(() => {
+    const breakpoint = window.matchMedia("(min-width: 768px)");
+    const updateCarouselLayout = () => setCarouselEnabled(breakpoint.matches);
+    updateCarouselLayout();
+    breakpoint.addEventListener("change", updateCarouselLayout);
+    return () => breakpoint.removeEventListener("change", updateCarouselLayout);
+  }, []);
+
+  useEffect(() => {
+    setCarouselPage(0);
+  }, [c, price, avail, sort, carouselEnabled]);
+
+  useEffect(() => {
+    if (
+      !carouselEnabled ||
+      pageCount < 2 ||
+      carouselPaused ||
+      prefersReducedMotion
+    ) {
+      return;
+    }
+    const interval = window.setInterval(
+      () => setCarouselPage((page) => (page + 1) % pageCount),
+      5000,
+    );
+    return () => window.clearInterval(interval);
+  }, [carouselEnabled, pageCount, carouselPaused, prefersReducedMotion]);
   const clear = () => {
     setSp({});
     setPrice("all");
@@ -149,14 +193,68 @@ export default function Shop() {
           <div className="mt-10 grid gap-12 md:grid-cols-[13rem_1fr]">
             <aside className="hidden md:block">{Filters}</aside>
             <div>
-              <p className="mb-6 text-sm text-muted">
-                {list.length} {list.length === 1 ? "piece" : "pieces"}
-              </p>
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <p className="text-sm text-muted">
+                  {list.length} {list.length === 1 ? "piece" : "pieces"}
+                </p>
+                {carouselEnabled && pageCount > 1 && (
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      aria-label="Previous products"
+                      onClick={() =>
+                        setCarouselPage((page) => (page - 1 + pageCount) % pageCount)
+                      }
+                      className="grid h-9 w-9 place-items-center rounded-full border border-line transition hover:border-ink"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <span className="min-w-16 text-center text-xs text-muted">
+                      {carouselPage + 1} / {pageCount}
+                    </span>
+                    <button
+                      type="button"
+                      aria-label="Next products"
+                      onClick={() =>
+                        setCarouselPage((page) => (page + 1) % pageCount)
+                      }
+                      className="grid h-9 w-9 place-items-center rounded-full border border-line transition hover:border-ink"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
+              </div>
               {list.length ? (
-                <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
-                  {list.map((p) => (
-                    <ProductCard key={p.id} p={p} />
-                  ))}
+                <div
+                  onMouseEnter={() => setCarouselPaused(true)}
+                  onMouseLeave={() => setCarouselPaused(false)}
+                  onFocusCapture={() => setCarouselPaused(true)}
+                  onBlurCapture={(event) => {
+                    if (
+                      !(event.relatedTarget instanceof Node) ||
+                      !event.currentTarget.contains(event.relatedTarget)
+                    ) {
+                      setCarouselPaused(false);
+                    }
+                  }}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                      key={carouselEnabled ? `page-${carouselPage}` : "all-products"}
+                      initial={
+                        prefersReducedMotion ? false : { opacity: 0, y: 8 }
+                      }
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+                      transition={{ duration: 0.35 }}
+                      className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-2 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4"
+                    >
+                      {visibleProducts.map((p) => (
+                        <ProductCard key={p.id} p={p} />
+                      ))}
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               ) : (
                 <div className="py-20 text-center">

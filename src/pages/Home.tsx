@@ -26,6 +26,12 @@ const cats = [
     "/shop?c=new",
     IMG.catNew,
   ],
+  [
+    "Bestsellers",
+    "The pieces you reach for most.",
+    "/shop?c=best",
+    IMG.catBest,
+  ],
 ];
 function Row({
   title,
@@ -114,7 +120,7 @@ export default function Home() {
         </section>
       </ScrollReveal>
       <ScrollReveal>
-        <section className={`${wrap} grid gap-4 pb-20 md:grid-cols-3`}>
+        <section className={`${wrap} grid gap-4 pb-20 sm:grid-cols-2 lg:grid-cols-4`}>
           {cats.map(([t, c, to, img]) => (
             <Link
               key={t}
@@ -137,13 +143,13 @@ export default function Home() {
       </ScrollReveal>
       <Row
         title="New arrivals"
-        items={products.filter((p) => p.isNew).slice(0, 4)}
+        items={products.filter((p) => p.isNew).slice(0, 6)}
         to="/shop?c=new"
         cta="Discover new arrivals"
       />
       <Row
         title="Bestsellers"
-        items={products.filter((p) => p.isBestseller).slice(0, 4)}
+        items={products.filter((p) => p.isBestseller).slice(0, 6)}
         to="/shop?c=best"
         cta="Explore bestsellers"
       />
