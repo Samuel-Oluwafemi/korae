@@ -30,7 +30,7 @@ const shoes = [
 export const IMG = {
   bags,
   shoes,
-  about: new URL("../assets/heroImg5.jpg", import.meta.url).href,
+  about: new URL("../assets/heroImg2.jpg", import.meta.url).href,
   statement: u("photo-1445205170230-053b83016050"),
   catBags: bags[0],
   catShoes: shoes[0],
