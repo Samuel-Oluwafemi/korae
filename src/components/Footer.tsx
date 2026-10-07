@@ -83,6 +83,17 @@ export default function Footer() {
             <span>Terms of Service</span>
           </p>
         </div>
+        <p className="mx-auto mt-5 max-w-7xl text-center text-xs text-ivory/65 sm:text-right">
+          Designed &amp; built by{" "}
+          <a
+            href="https://samueloluwafemi.netlify.app/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-ivory/90 underline decoration-ivory/35 underline-offset-4 transition hover:text-ivory hover:decoration-ivory"
+          >
+            Samuel Oluwafemi
+          </a>
+        </p>
       </footer>
     </ScrollReveal>
   );
